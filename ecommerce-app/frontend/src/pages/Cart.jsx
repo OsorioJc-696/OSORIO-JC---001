@@ -1,43 +1,55 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaTrashAlt, FaShoppingBag } from 'react-icons/fa';
+import { useCart } from '../context/CartContext';  // Usamos el contexto
+import '../styles/Cart.css';
 
 function Cart() {
-  const [cart, setCart] = useState([]);
+  const { cart, removeFromCart } = useCart();  // Usamos el contexto
 
-  useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(savedCart);
-  }, []);
-
-  const handleRemoveFromCart = (productId) => {
-    const updatedCart = cart.filter((product) => product.id !== productId);
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  };
+  const totalPrice = cart.reduce((acc, item) => acc + item.price, 0);
 
   return (
     <div className="cart container">
-      <h1>Shopping Cart</h1>
+      <h1 className="cart-title">
+        <FaShoppingBag /> Your Cart
+      </h1>
+
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p className="empty-cart">Your cart is empty.</p>
       ) : (
         <div className="cart-items">
           {cart.map((product) => (
             <div key={product.id} className="cart-item">
-              <img src={product.image_url} alt={product.name} className="cart-item-image" />
+              <div className="cart-item-image-wrapper">
+                <img src={product.image_url} alt={product.name} className="cart-item-image" />
+              </div>
               <div className="cart-item-details">
-                <h3>{product.name}</h3>
-                <p>${product.price}</p>
-                <button onClick={() => handleRemoveFromCart(product.id)}>Remove</button>
+                <h3 className="cart-item-name">{product.name}</h3>
+                <p className="cart-item-price">${product.price.toFixed(2)}</p>
+                <button
+                  onClick={() => removeFromCart(product.id)}
+                  className="remove-item-btn"
+                  aria-label={`Remove ${product.name}`}
+                >
+                  <FaTrashAlt />
+                </button>
               </div>
             </div>
           ))}
         </div>
       )}
-      <div className="cart-footer">
-        <Link to="/" className="continue-shopping">Continue Shopping</Link>
-        <button className="checkout-btn">Checkout</button>
-      </div>
+
+      {cart.length > 0 && (
+        <div className="cart-footer">
+          <div className="cart-total">
+            Total: <span>${totalPrice.toFixed(2)}</span>
+          </div>
+          <div className="cart-actions">
+            <Link to="/products" className="continue-shopping">Continue Shopping</Link>
+            <button className="checkout-btn">Checkout</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

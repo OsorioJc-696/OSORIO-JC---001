@@ -17,7 +17,7 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
+    navigate('/products');
   };
 
   return (
@@ -25,7 +25,7 @@ function Navbar() {
       <div className="navbar-container">
         
         {/* Logo */}
-        <Link to="/" className="logo" aria-label="E-Shop Home">
+        <Link to="/Products" className="logo" aria-label="E-Shop Home">
           <FaStore className="logo-icon" />
           <span className="logo-text">E-Shop</span>
         </Link>

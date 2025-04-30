@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaSearch, FaBoxOpen, FaLaptop, FaCamera, FaSatellite, FaEye, FaCartPlus, FaShoppingCart } from 'react-icons/fa';
 import api from '../services/api';
+import { useCart } from '../context/CartContext';  // Usamos el contexto
 import '../styles/Products.css';
 
 function Products() {
@@ -8,7 +10,7 @@ function Products() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [cart, setCart] = useState([]);
+  const { cart, addToCart } = useCart();  // Usamos el contexto
 
   useEffect(() => {
     api.get('/products').then((response) => {
@@ -17,7 +19,6 @@ function Products() {
     });
   }, []);
 
-  // Maneja la búsqueda
   const handleSearch = () => {
     const lowercasedSearch = searchTerm.toLowerCase();
     const results = products.filter(
@@ -28,7 +29,6 @@ function Products() {
     setFilteredProducts(results);
   };
 
-  // Filtrar por categoría
   const handleCategoryFilter = (category) => {
     setSelectedCategory(category);
     if (category === 'all') {
@@ -39,62 +39,46 @@ function Products() {
     }
   };
 
-  // Agregar al carrito
   const handleAddToCart = (product) => {
-    const updatedCart = [...cart, product];
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart)); // Guardar en localStorage para persistencia
+    addToCart({ ...product, price: Number(product.price) });
   };
 
   return (
-    <div className="products container">
-      <div className="search-filters">
+    <div className="products-container">
+      {/* Search & Filters */}
+      <section className="search-filters">
         <div className="search-wrapper">
-          <i className="fas fa-search search-icon"></i>
+          <FaSearch className="search-icon" />
           <input
             type="text"
-            placeholder="Search by name or price..."
+            placeholder="Buscar productos..."
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyUp={handleSearch}
           />
         </div>
-        <div className="category-filter">
-          <button
-            onClick={() => handleCategoryFilter('all')}
-            className={selectedCategory === 'all' ? 'active' : ''}
-          >
-            <i className="fas fa-box-open"></i> All
-          </button>
-          <button
-            onClick={() => handleCategoryFilter('Laptop')}
-            className={selectedCategory === 'Laptop' ? 'active' : ''}
-          >
-            <i className="fas fa-laptop"></i> Laptop
-          </button>
-          <button
-            onClick={() => handleCategoryFilter('PC')}
-            className={selectedCategory === 'PC' ? 'active' : ''}
-          >
-            <i className="fas fa-desktop"></i> PC
-          </button>
-          <button
-            onClick={() => handleCategoryFilter('Cámara')}
-            className={selectedCategory === 'Cámara' ? 'active' : ''}
-          >
-            <i className="fas fa-camera"></i> Cámara
-          </button>
-          <button
-            onClick={() => handleCategoryFilter('Drone')}
-            className={selectedCategory === 'Drone' ? 'active' : ''}
-          >
-            <i className="fas fa-drone"></i> Drone
-          </button>
-        </div>
-      </div>
 
-      <div className="product-grid">
+        <div className="category-filter">
+          {[
+            { icon: <FaBoxOpen />, category: 'all' },
+            { icon: <FaLaptop />, category: 'Laptop' },
+            { icon: <FaCamera />, category: 'Cámara' },
+            { icon: <FaSatellite />, category: 'Drone' },
+          ].map(({ icon, category }) => (
+            <button
+              key={category}
+              onClick={() => handleCategoryFilter(category)}
+              className={selectedCategory === category ? 'active' : ''}
+            >
+              {icon}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Product Grid */}
+      <section className="product-grid">
         {filteredProducts.map((product) => (
           <div key={product.id} className="product-card">
             <div className="product-image-wrapper">
@@ -105,31 +89,30 @@ function Products() {
               />
             </div>
             <div className="product-info">
-              <h2 className="product-name">{product.name}</h2>
-              <p className="price">${product.price}</p>
+              <h3 className="product-name">{product.name}</h3>
+              <p className="product-price">${product.price}</p>
               <div className="product-actions">
-                <Link to={`/products/${product.id}`} className="view-details">
-                  <i className="fas fa-eye"></i> View Details
+                <Link to={`/products/${product.id}`} className="action-btn">
+                  <FaEye />
                 </Link>
                 <button
-                  className="add-to-cart"
+                  className="action-btn"
                   onClick={() => handleAddToCart(product)}
                 >
-                  <i className="fas fa-cart-plus"></i> Add to Cart
+                  <FaCartPlus />
                 </button>
               </div>
             </div>
           </div>
         ))}
-      </div>
+      </section>
 
-      <div className="view-cart">
-        <Link to="/cart">
-          <button className="view-cart-btn">
-            <i className="fas fa-shopping-cart"></i> View Cart ({cart.length})
-          </button>
-        </Link>
-      </div>
+      {/* Cart */}
+      <Link to="/cart">
+        <button className="view-cart-btn">
+          <FaShoppingCart /> ({cart.length}) {/* Este contador ahora se actualiza en tiempo real */}
+        </button>
+      </Link>
     </div>
   );
 }

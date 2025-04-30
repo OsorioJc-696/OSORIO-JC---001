@@ -28,3 +28,26 @@ export const login = async (req, res) => {
     res.status(500).json({ error: 'Error logging in' });
   }
 };
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    if (!token) {
+      return res.status(401).json({ error: 'Token de autenticación requerido' });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);  // Asegúrate de que esta función esté implementada correctamente
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    const { password, ...userData } = user;
+    res.json(userData);  // Retorna solo los datos del usuario sin la contraseña
+  } catch (err) {
+    console.error('Error en la ruta /me:', err);
+    res.status(500).json({ error: 'Error en el servidor' });
+  }
+};
+

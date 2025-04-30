@@ -1,35 +1,38 @@
-import { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
-export const CartContext = createContext();
+// Crear el contexto
+const CartContext = createContext();
 
-export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+// Proveedor del contexto
+export const CartProvider = ({ children }) => {
+  const [cart, setCart] = useState([]);
 
+  // Cargar el carrito desde localStorage al inicio
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCartItems(cart);
+    const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCart(savedCart);
   }, []);
 
-  const addToCart = (item) => {
-    const updatedCart = [...cartItems, item];
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  // Función para agregar un producto al carrito
+  const addToCart = (product) => {
+    const updatedCart = [...cart, product];
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));  // Guardar en localStorage
   };
 
-  const removeFromCart = (id) => {
-    const updatedCart = cartItems.filter(item => item.id !== id);
-    setCartItems(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  };
-
-  const clearCart = () => {
-    setCartItems([]);
-    localStorage.removeItem('cart');
+  // Función para eliminar un producto del carrito
+  const removeFromCart = (productId) => {
+    const updatedCart = cart.filter((item) => item.id !== productId);
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));  // Guardar en localStorage
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
-}
+};
+
+// Custom hook para usar el contexto
+export const useCart = () => useContext(CartContext);
