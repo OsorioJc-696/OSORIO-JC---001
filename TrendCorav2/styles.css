@@ -1,0 +1,230 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.collage-container {
+  position: relative;
+  width: 600px;
+  height: 600px;
+}
+
+.foto {
+  position: absolute;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Posiciona cada imagen manualmente para formar el corazón */
+/* A continuación, se muestran ejemplos de posicionamiento para algunas imágenes */
+
+.foto1 {
+  top: 50px;
+  left: 150px;
+  width: 100px;
+  height: 100px;
+}
+
+.foto2 {
+  top: 50px;
+  left: 350px;
+  width: 100px;
+  height: 100px;
+}
+
+.foto3 {
+  top: 150px;
+  left: 100px;
+  width: 100px;
+  height: 100px;
+}
+
+.foto4 {
+  top: 150px;
+  left: 400px;
+  width: 100px;
+  height: 100px;
+}
+.foto5 {
+  top: 250px;
+  left: 50px;
+  width: 100px;
+  height: 100px;
+}
+.foto6 {
+  top: 250px;
+  left: 500px;
+  width: 100px;
+  height: 100px;
+}
+.foto7 {
+  top: 350px;
+  left: 100px;
+  width: 100px;
+  height: 100px;
+}
+.foto8 {
+  top: 350px;
+  left: 400px;
+  width: 100px;
+  height: 100px;
+}
+.foto9 {
+  top: 450px;
+  left: 150px;
+  width: 100px;
+  height: 100px;
+}
+.foto10 {
+  top: 450px;
+  left: 350px;
+  width: 100px;
+  height: 100px;
+}
+.foto11 {
+  top: 50px;
+  left: 250px;
+  width: 100px;
+  height: 100px;
+}
+.foto12 {
+  top: 150px;
+  left: 250px;
+  width: 100px;
+  height: 100px;
+}
+.foto13 {
+  top: 250px;
+  left: 250px;
+  width: 100px;
+  height: 100px;
+}
+.foto14 {
+  top: 350px;
+  left: 250px;
+  width: 100px;
+  height: 100px;
+}
+.foto15 {
+  top: 450px;
+  left: 250px;
+  width: 100px;
+  height: 100px;
+}
+.foto16 {
+  top: 100px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+}
+.foto17 {
+  top: 100px;
+  left: 300px;
+  width: 100px;
+  height: 100px;
+}
+.foto18 {
+  top: 200px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+}
+.foto19 {
+  top: 200px;
+  left: 300px;
+  width: 100px;
+  height: 100px;
+}
+.foto20 {
+  top: 300px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+}
+.foto21 {
+  top: 300px;
+  left: 300px;
+  width: 100px;
+  height: 100px;
+}
+.foto22 {
+  top: 400px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+}
+.foto23 {
+  top: 400px;
+  left: 300px;
+  width: 100px;
+  height: 100px;
+}
+.foto24 {
+  top: 500px;
+  left: 200px;
+  width: 100px;
+  height: 100px;
+}
+.foto25 {
+  top: 500px;
+  left: 300px;
+  width: 100px;
+  height: 100px;
+}
+.foto26 {
+  top: 50px;
+  left: 100px;
+  width: 100px;
+  height: 100px;
+}
+.foto27 {
+  top: 50px;
+  left: 400px;
+  width: 100px;
+  height: 100px;
+}
+.foto28 {
+  top: 150px;
+  left: 50px;
+  width: 100px;
+  height: 100px;
+}
+.foto29 {
+  top: 150px;
+  left: 500px;
+  width: 100px;
+  height: 100px;
+}
+.foto30 {
+  top: 250px;
+  left: 0px;
+  width: 100px;
+  height: 100px;
+}
+.foto31 {
+  top: 250px;
+  left: 550px;
+  width: 100px;
+  height: 100px;
+}
+.foto32 {
+  top: 350px;
+  left: 50px;
+  width: 100px;
+  height: 100px;
+}
+.foto33 {
+  top: 350px;
+  left: 500px;
+  width: 100px;
+  height: 100px;
+}
+
+
+/* Continúa definiendo las clases .foto3, .foto4, ..., .foto40 con sus respectivas posiciones y tamaños */
